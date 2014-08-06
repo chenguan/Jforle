@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd" >
+<beans>
+	<!-- 配置loginService -->
+	<bean name="loginTarget" class="com.jeffy.jforle.service.impl.LoginServiceImpl">
+		<property name="customerDao">
+			<ref bean="customerDao"/>
+		</property>
+	</bean>
+	
+	<bean name="loginService" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target">
+			<ref bean="loginTarget"/>
+		</property>
+		<property name="interceptorNames">
+    		<list>
+    			<value>transactionInterceptor</value>
+    		</list>
+    	</property>
+    	
+    	<property name="proxyInterfaces">
+    		<list>
+    			<value>com.jeffy.jforle.service.LoginService</value>
+    		</list>
+    	</property>
+	</bean>
+	
+</beans>
